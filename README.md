@@ -1,1 +1,1 @@
-# project-4-rocnik_zari_rijen
+base_url nastaveno v app na: http://localhost/project-4-rocnik_zari_rijen/
