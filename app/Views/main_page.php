@@ -42,7 +42,6 @@
     </style>
 </head>
 <body>
-
     <nav class="navbar navbar-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
@@ -53,7 +52,6 @@
             </a>
         </div>
     </nav>
-
     <div class="container my-4">
         <div class="row">
             <?php foreach($races as $race) { ?>
@@ -65,18 +63,21 @@
                                     <?php echo $race->default_name; ?>
                                 </a>
                             </h5>
+                                <p class="card-text">
+                                    <a href="<?php echo base_url('race/'.$race->id)?>" class="text-decoration-none">
+                                        Více informací o závodu
+                                    </a>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php } ?>
-        </div>
-        
+                <?php } ?>
+            </div>
         <nav>
             <ul class="pagination">
                 <?php echo $pager->links(); ?>
             </ul>
         </nav>
     </div>
-
 </body>
 </html>
