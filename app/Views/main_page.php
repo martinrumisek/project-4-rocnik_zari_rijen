@@ -9,7 +9,7 @@
     <title>All races (závody)</title>
     <style>
         .card {
-            width: 20rem;
+            width: 22rem;
             height: 22rem;
             margin: auto;
         }
@@ -36,8 +36,8 @@
             color: white;
         }
         .col-md-4 {
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
         }
     </style>
 </head>
@@ -57,7 +57,7 @@
     <div class="container my-4">
         <div class="row">
             <?php foreach($races as $race) { ?>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4 mb-2">
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title">
@@ -65,9 +65,6 @@
                                     <?php echo $race->default_name; ?>
                                 </a>
                             </h5>
-                            <p class="card-text">
-                                Datum: <?php echo isset($race->race_date) ? $race->race_date : 'Datum není dostupné'; ?>
-                            </p>
                         </div>
                     </div>
                 </div>

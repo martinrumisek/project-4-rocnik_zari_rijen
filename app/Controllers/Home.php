@@ -11,7 +11,7 @@ class Home extends BaseController
     public function index()
     {
         $raceModel = new RaceModel();
-        $data['races'] = $raceModel->paginate(20);
+        $data['races'] = $raceModel->paginate(18);
         $data['pager'] = $raceModel->pager;
         return view('main_page', $data);
     }
