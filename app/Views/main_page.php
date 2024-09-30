@@ -53,26 +53,22 @@
         </div>
     </nav>
     <div class="container my-4">
-        <div class="row">
+        <div class="row d-flex justify-content-center">
             <?php foreach($races as $race) { ?>
-                <div class="col-md-4 mb-2">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a href="<?php echo base_url('race/'.$race->id)?>" class="text-decoration-none">
-                                    <?php echo $race->default_name; ?>
-                                </a>
-                            </h5>
-                                <p class="card-text">
-                                    <a href="<?php echo base_url('race/'.$race->id)?>" class="text-decoration-none">
-                                        Více informací o závodu
-                                    </a>
-                                </p>
-                            </div>
-                        </div>
+                <div class="card m-1" style="height: 110px">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <?php echo $race->default_name; ?>
+                        </h5>
+                        <p class="card-text">
+                            <a href="<?php echo base_url('race/'.$race->id)?>" class="text-decoration-none">
+                                Více informací o závodu
+                            </a>
+                        </p>
                     </div>
-                <?php } ?>
-            </div>
+                </div>
+            <?php } ?>
+        </div>
         <nav>
             <ul class="pagination">
                 <?php echo $pager->links(); ?>
