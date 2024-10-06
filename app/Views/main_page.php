@@ -55,7 +55,7 @@
     <div class="container my-4">
         <div class="row d-flex justify-content-center">
             <?php foreach($races as $race) { ?>
-                <div class="card m-1" style="height: 110px">
+                <div class="card m-1" style="height: 130px">
                     <div class="card-body">
                         <h5 class="card-title">
                             <?php echo $race->default_name; ?>
@@ -63,6 +63,10 @@
                         <p class="card-text">
                             <a href="<?php echo base_url('race/'.$race->id)?>" class="text-decoration-none">
                                 Více informací o závodu
+                            </a>
+                            <br>
+                            <a href="<?php echo base_url('generate-pdf/'.$race->id)?>" class="text-decoration-none" target="_blank">
+                                Zobrazit v PDF
                             </a>
                         </p>
                     </div>

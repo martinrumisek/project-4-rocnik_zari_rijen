@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\RaceModel;
 use App\Models\RaceYearModel;
 use App\Models\UserModel;
+use Dompdf\Dompdf;
 
 class Home extends BaseController
 {
@@ -104,5 +105,26 @@ class Home extends BaseController
     {
         $data = ['message' => $this->session->getFlashdata('login_message')];
         return view('login', $data);
+    }
+
+    // Generování PDF souborů
+    public function generate_pdf($raceId){
+        $dompdf = new Dompdf();
+        $raceModel = new RaceModel();
+        $dataRace = $raceModel->find($raceId);
+        $nameRace = $dataRace->default_name;
+        $raceYearModel = new RaceYearModel();
+        $dataRaceYears= $raceYearModel->where('id_race', $raceId)->findAll();
+        if(!empty($dataRaceYears)){
+            $firstLogo = $dataRaceYears[0];
+            $logoName = $firstLogo->logo;
+        }else{
+            $logoName = "";
+        }
+        $html ='<img src="img/logos/'.$logoName.'" alt="'.$logoName.'"><br><h1>'.$nameRace.'</h1>';
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        return $this->response->setHeader('Content-Type', 'application/pdf')->setBody($dompdf->output())->send();
     }
 }

@@ -12,3 +12,4 @@ $routes->post('register', 'Home::register'); // Registrace nového uživatele
 $routes->get('register', 'Home::registerForm'); // Registrační formulář
 $routes->post('login', 'Home::login'); // Přihlášení uživatele
 $routes->get('login', 'Home::loginForm'); // Přihlašovací formulář
+$routes->get('generate-pdf/(:num)', 'Home::generate_pdf/$1', ['filter' => 'login']); //generovaní PDF
