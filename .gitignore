@@ -125,3 +125,7 @@ nb-configuration.xml
 
 /results/
 /phpunit*.xml
+
+# Vendor libs
+/vendor/dompdf/
+/vendor/masterminds/
