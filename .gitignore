@@ -84,8 +84,8 @@ phpunit
 #-------------------------
 # Composer
 #-------------------------
-!vendor/dompdf/
-#vendor/
+vendor/
+!vendor/codeigniter4
 
 #-------------------------
 # IDE / Development Files
@@ -125,9 +125,3 @@ nb-configuration.xml
 
 /results/
 /phpunit*.xml
-
-# Ignore everything in the vendor directory
-/vendor/*
-
-# But not the codeigniter4 directory
-!/vendor/codeigniter4/
