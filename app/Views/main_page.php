@@ -53,9 +53,10 @@
         </div>
     </nav>
     <div class="container my-4">
-        <div class="row d-flex justify-content-center">
+        <input type="text" id="raceFilter" name="" placeholder="Hledejte podle názvu..." class="form-control mb-3" />
+        <div class="row d-flex justify-content-center" id="raceCards">
             <?php foreach($races as $race) { ?>
-                <div class="card m-1" style="height: 130px">
+                <div class="card m-1 race-card" style="height: 130px">
                     <div class="card-body">
                         <h5 class="card-title">
                             <?php echo $race->default_name; ?>
@@ -74,10 +75,32 @@
             <?php } ?>
         </div>
         <nav>
-            <ul class="pagination">
-                <?php echo $pager->links(); ?>
-            </ul>
-        </nav>
+    <ul class="pagination">
+        <?php if (isset($pager) && $pager): ?>
+            <?php echo $pager->links();?>
+        <?php endif; ?>
+    </ul>
+</nav>
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterInput = document.getElementById('raceFilter');
+        const raceCardsContainer = document.getElementById('raceCards');
+        const pagination = document.querySelector('.pagination'); // Získání paginace
+
+        filterInput.addEventListener('input', function() {
+            const filterValue = filterInput.value;
+
+            // Odeslání AJAX požadavku
+            fetch(`<?php echo base_url('filter'); ?>?filter=${filterValue}`)
+                .then(response => response.text())
+                .then(data => {
+                    raceCardsContainer.innerHTML = data; // Aktualizuj pouze karty závodů
+                    pagination.style.display = filterValue ? 'none' : ''; // Skrytí paginace při aktivním filtru
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
+    </script>
 </body>
 </html>

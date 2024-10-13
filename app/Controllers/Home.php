@@ -6,6 +6,7 @@ use App\Models\RaceModel;
 use App\Models\RaceYearModel;
 use App\Models\UserModel;
 use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class Home extends BaseController
 {
@@ -25,6 +26,20 @@ class Home extends BaseController
         $data['pager'] = $raceModel->pager;
         return view('main_page', $data);
     }
+    public function filter()
+{
+    $raceModel = new RaceModel();
+    $filter = $this->request->getGet('filter');
+
+    if ($filter) {
+        $data['races'] = $raceModel->like('default_name', $filter)->findAll();
+    } else {
+        $data['races'] = $raceModel->paginate(18);
+    }
+
+    return view('race_cards', $data);
+
+}
 
     // Metoda zobrazující stránku závodu
     public function race($raceId)
@@ -109,11 +124,15 @@ class Home extends BaseController
 
     // Generování PDF souborů
     public function generate_pdf($raceId){
-        $dompdf = new Dompdf();
+        $options = new Options();
+        $options->set('defaultFont','DejaVu Sans');
+        $dompdf = new Dompdf($options);
         $raceModel = new RaceModel();
         $dataRace = $raceModel->find($raceId);
         $nameRace = $dataRace->default_name;
         $raceYearModel = new RaceYearModel();
+        $dompdf->set_option('isRemoteEnabled', true);
+        $dompdf->set_option('defaultFont', 'DejaVu Sans');
         $dataRaceYears= $raceYearModel->where('id_race', $raceId)->findAll();
         if(!empty($dataRaceYears)){
             $firstLogo = $dataRaceYears[0];
@@ -121,7 +140,52 @@ class Home extends BaseController
         }else{
             $logoName = "";
         }
-        $html ='<img src="img/logos/'.$logoName.'" alt="'.$logoName.'"><br><h1>'.$nameRace.'</h1>';
+        $html = '
+        <!DOCTYPE html>
+        <html lang="cs">
+        <head>
+            <meta charset="UTF-8">
+            <title>PDF</title>
+            <style>
+                    body { font-family: DejaVu Sans; font-size: 12px; }
+            </style>
+        </head>
+        <body>
+            <div style="text-align: center;">
+                <img src="' . base_url('img/logos/' . $logoName) . '" alt="' . htmlspecialchars($logoName, ENT_QUOTES, 'UTF-8') . '" style="max-height: 50px; max-width: 100%;"><br>
+                <h1>' . htmlspecialchars($nameRace, ENT_QUOTES, 'UTF-8') . '</h1>
+            </div>
+            
+            <table border="1" cellspacing="0" cellpadding="5" width="100%">
+                <thead>
+                    <tr>
+                        <th>Zkratka země</th>
+                        <th>Skutečný název</th>
+                        <th>Rok</th>
+                        <th>Zahajení</th>
+                        <th>Ukončení</th>
+                    </tr>
+                </thead>
+                <tbody>';
+        
+        // Loop přes závody
+        foreach($dataRaceYears as $race_year) {
+            $html .= '
+                <tr>
+                    <td>' . htmlspecialchars($race_year->country, ENT_QUOTES, 'UTF-8') . '</td>
+                    <td>' . htmlspecialchars($race_year->real_name, ENT_QUOTES, 'UTF-8') . '</td>
+                    <td>' . htmlspecialchars($race_year->year, ENT_QUOTES, 'UTF-8') . '</td>
+                    <td>' . htmlspecialchars($race_year->start_date, ENT_QUOTES, 'UTF-8') . '</td>
+                    <td>' . htmlspecialchars($race_year->end_date, ENT_QUOTES, 'UTF-8') . '</td>
+                </tr>';
+        }
+    
+        // Konec tabulky
+        $html .= '
+                </tbody>
+            </table>
+        </body>
+        </html>';
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
