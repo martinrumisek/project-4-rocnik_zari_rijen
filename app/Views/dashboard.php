@@ -61,7 +61,7 @@
                 </tr>
                 <?php foreach ($races as $key => $race)
                 {
-                    echo '<tr><td>'.$race->id.'</td><td>'.$race->default_name.'</td><td>'.$race->link.'</td><td>'.$race->country.'</td><td>'.$race->type.'</td><td><a href="'.base_url('race/edit/'.$race->id).'"><button class="btn btn-warning">Edit</button></a><a href="'.base_url('race/delete/'.$race->id).'"><button class="btn btn-danger">Delete</button></a></td></tr>';    
+                    echo '<tr><td>'.$race->id.'</td><td>'.$race->default_name.'<a class="px-1" href="'.base_url('race/'.$race->id).'"><i class="fa-solid fa-arrow-up-right-from-square fa-xs"></i></a></td><td>'.$race->link.'</td><td>'.$race->country.'</td><td>'.$race->type.'</td><td><a href="'.base_url('race/edit/'.$race->id).'"><button class="btn btn-warning">Edit</button></a><a href="'.base_url('race/delete/'.$race->id).'"><button class="btn btn-danger">Delete</button></a></td></tr>';    
                 } ?>
             </table>
             <ul class="pagination">
