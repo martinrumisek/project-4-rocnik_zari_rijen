@@ -7,6 +7,8 @@ use App\Models\RaceYearModel;
 use App\Models\UserModel;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Home extends BaseController
 {
@@ -167,8 +169,7 @@ class Home extends BaseController
                     </tr>
                 </thead>
                 <tbody>';
-        
-        // Loop přes závody
+    
         foreach($dataRaceYears as $race_year) {
             $html .= '
                 <tr>
@@ -180,7 +181,6 @@ class Home extends BaseController
                 </tr>';
         }
     
-        // Konec tabulky
         $html .= '
                 </tbody>
             </table>
@@ -190,6 +190,39 @@ class Home extends BaseController
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         return $this->response->setHeader('Content-Type', 'application/pdf')->setBody($dompdf->output())->send();
+    }
+
+    public function export(){
+        $raceModel = new RaceModel();
+        $races = $raceModel->findAll();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'Název závodu');
+        $sheet->setCellValue('C1', 'Zkratka země');
+        $sheet->setCellValue('D1', 'Typ závodu');
+        $sheet->setCellValue('E1', 'Odkaz na závod');
+
+        $row = 2;
+        foreach ($races as $race) {
+            $sheet->setCellValue('A' . $row, $race->id);
+            $sheet->setCellValue('B' . $row, $race->default_name);
+            $sheet->setCellValue('C' . $row, $race->country);
+            $sheet->setCellValue('D' . $row, $race->type);
+            $sheet->setCellValue('E' . $row, $race->link);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'races_export.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $fileName . '"');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+        exit();
     }
 
     public function dashboard()

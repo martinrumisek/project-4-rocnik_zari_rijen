@@ -14,6 +14,7 @@ $routes->get('register', 'Home::registerForm'); // Registrační formulář
 $routes->post('login', 'Home::login'); // Přihlášení uživatele
 $routes->get('login', 'Home::loginForm'); // Přihlašovací formulář
 $routes->get('generate-pdf/(:num)', 'Home::generate_pdf/$1', ['filter' => 'login']); //generovaní PDF
+$routes->get('export', 'Home::export'); // export do tabulky excel
 $routes->get('dashboard', 'Home::dashboard'); // Dashboard admina
 $routes->get('race/new', 'Home::showNewRaceForm'); // Formulář pro přidání závodu
 $routes->post('race/add', 'Home::addRace'); // Zpracování přidání závodu
