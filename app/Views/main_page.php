@@ -53,7 +53,10 @@
         </div>
     </nav>
     <div class="container my-4">
-        <input type="text" id="raceFilter" name="" placeholder="Hledejte podle názvu..." class="form-control mb-3" />
+        <div class="d-flex justify-content-between">
+            <input type="text" id="raceFilter" name="" placeholder="Hledejte podle názvu..." class="form-control mb-3" style="width: 300px;" />
+            <a href="<?= base_url('export'); ?>">Excel - export</a>
+        </div>
         <div class="row d-flex justify-content-center" id="raceCards">
             <?php foreach($races as $race) { ?>
                 <div class="card m-1 race-card" style="height: 130px">
