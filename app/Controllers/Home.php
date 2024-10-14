@@ -286,4 +286,22 @@ class Home extends BaseController
         $raceModel->save($newRace);
         return redirect()->to('dashboard');
     }
+
+    public function graphs()
+    {
+        $raceYearModel = new RaceYearModel();
+
+        $firstYear = $raceYearModel->orderBy('year', 'asc')->first()->year;
+        $lastYear = $raceYearModel->orderBy('year', 'desc')->first()->year;
+
+        for($i = $firstYear; $i < $lastYear; $i++)
+        {
+            $races[$i] = count($raceYearModel->where('year', $i)->findAll());
+        }
+        $data['races'] = $races;
+
+        $data['menRaces'] = $raceYearModel->where('sex', 'M')->countAllResults();
+        $data['womenRaces'] = $raceYearModel->where('sex', 'W')->countAllResults();
+        return view('graph', $data);
+    }
 }
