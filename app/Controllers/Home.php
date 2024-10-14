@@ -191,4 +191,65 @@ class Home extends BaseController
         $dompdf->render();
         return $this->response->setHeader('Content-Type', 'application/pdf')->setBody($dompdf->output())->send();
     }
+
+    public function dashboard()
+    {
+        $raceModel = new RaceModel();
+        $data['races'] = $raceModel->findAll();
+        return view('dashboard', $data);  
+    }
+
+    public function addRace()
+    {
+        $name = $this->request->getVar('name');
+        $link = $this->request->getVar('link');
+        $country = $this->request->getVar('country');
+        $type = $this->request->getVar('type');
+        $newRace = [
+            'deafult_name' => $name,
+            'link' => $link,
+            'country' => $country,
+            'type' => $type
+        ];
+        $raceModel = new RaceModel();
+        $raceModel->insert($raceModel);
+        return redirect()->to('dashboard');
+    }
+
+    public function showNewRaceForm()
+    {
+        return view('add_race');
+    }
+
+    public function deleteRace($id)
+    {
+        $raceModel = new RaceModel();
+        $raceModel->delete($id);
+        return redirect()->to('dashboard');
+    }
+
+    public function editRace($id)
+    {
+        $raceModel = new RaceModel();
+        $data['race'] = $raceModel->find($id);
+        return view('edit_race', $data);
+    }
+
+    public function saveRace($id)
+    {
+        $raceModel = new RaceModel();
+        $name = $this->request->getVar('name');
+        $link = $this->request->getVar('link');
+        $country = $this->request->getVar('country');
+        $type = $this->request->getVar('type');
+        $newRace = [
+            'deafult_name' => $name,
+            'link' => $link,
+            'country' => $country,
+            'type' => $type,
+            'id' => $id
+        ];
+        $raceModel->save($newRace);
+        return redirect()->to('dashboard');
+    }
 }
