@@ -277,7 +277,7 @@ class Home extends BaseController
         $country = $this->request->getVar('country');
         $type = $this->request->getVar('type');
         $newRace = [
-            'deafult_name' => $name,
+            'default_name' => $name,
             'link' => $link,
             'country' => $country,
             'type' => $type,

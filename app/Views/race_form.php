@@ -37,7 +37,7 @@
     <main>
         <div class="container">
             <h1><?php if(isset($race)) echo 'Edit "'.$race->default_name.'"'; else echo 'Add race'?></h1>
-            <form method="post" action="<?php echo base_url('race/add');?>">
+            <form method="post" action="<?php if(isset($race)) echo base_url('race/edit/'.$race->id); else echo base_url('race/add');?>">
                 <div class="form-group">
                     <label for="inputName">Name<span class="text-danger" style="padding-left: 2px">*</span></label>
                     <input type="text" class="form-control" id="inputName" placeholder="" name="name" value="<?php if(isset($race)) echo $race->default_name;?>">
