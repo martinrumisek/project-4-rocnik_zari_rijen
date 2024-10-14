@@ -77,13 +77,11 @@
                 </div>
             <?php } ?>
         </div>
-        <nav>
     <ul class="pagination">
         <?php if (isset($pager) && $pager): ?>
             <?php echo $pager->links();?>
         <?php endif; ?>
     </ul>
-</nav>
     </div>
     <script>
     document.addEventListener('DOMContentLoaded', function() {

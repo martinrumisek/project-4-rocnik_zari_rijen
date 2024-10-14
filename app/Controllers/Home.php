@@ -228,7 +228,8 @@ class Home extends BaseController
     public function dashboard()
     {
         $raceModel = new RaceModel();
-        $data['races'] = $raceModel->findAll();
+        $data['races'] = $raceModel->paginate(100);
+        $data['pager'] = $raceModel->pager;
         return view('dashboard', $data);  
     }
 
@@ -239,19 +240,19 @@ class Home extends BaseController
         $country = $this->request->getVar('country');
         $type = $this->request->getVar('type');
         $newRace = [
-            'deafult_name' => $name,
+            'default_name' => $name,
             'link' => $link,
             'country' => $country,
             'type' => $type
         ];
         $raceModel = new RaceModel();
-        $raceModel->insert($raceModel);
+        $raceModel->insert((object)$newRace);
         return redirect()->to('dashboard');
     }
 
     public function showNewRaceForm()
     {
-        return view('add_race');
+        return view('race_form');
     }
 
     public function deleteRace($id)
@@ -265,7 +266,7 @@ class Home extends BaseController
     {
         $raceModel = new RaceModel();
         $data['race'] = $raceModel->find($id);
-        return view('edit_race', $data);
+        return view('race_form', $data);
     }
 
     public function saveRace($id)

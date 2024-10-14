@@ -19,6 +19,17 @@
         .navbar-brand i {
             color: white;
         }
+        .pagination {
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .page-item {
+            margin: 0 5px;
+        }
+        .page-link {
+            border: 1px solid #ddd;
+            border-radius: 0.25rem;
+        }
     </style>
 </head>
 <body>
@@ -53,6 +64,11 @@
                     echo '<tr><td>'.$race->id.'</td><td>'.$race->default_name.'</td><td>'.$race->link.'</td><td>'.$race->country.'</td><td>'.$race->type.'</td><td><a href="'.base_url('race/edit/'.$race->id).'"><button class="btn btn-warning">Edit</button></a><a href="'.base_url('race/delete/'.$race->id).'"><button class="btn btn-danger">Delete</button></a></td></tr>';    
                 } ?>
             </table>
+            <ul class="pagination">
+                <?php if (isset($pager) && $pager): ?>
+                    <?php echo $pager->links();?>
+                <?php endif; ?>
+            </ul>
         </div>
     </main>
 </body>

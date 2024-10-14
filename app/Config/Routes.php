@@ -20,4 +20,4 @@ $routes->get('race/new', 'Home::showNewRaceForm'); // Formulář pro přidání 
 $routes->post('race/add', 'Home::addRace'); // Zpracování přidání závodu
 $routes->get('race/edit/(:num)', 'Home::editRace/$1'); // Formulář pro editaci závodu
 $routes->post('race/edit/(:num)', 'Home::saveRace/$1'); // Editace závodu
-$routes->post('race/delete/(:num)', 'Home::deleteRace/$1'); // Odstranění závodu
+$routes->get('race/delete/(:num)', 'Home::deleteRace/$1'); // Odstranění závodu
