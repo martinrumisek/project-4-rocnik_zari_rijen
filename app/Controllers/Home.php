@@ -26,21 +26,45 @@ class Home extends BaseController
         $raceModel = new RaceModel();
         $data['races'] = $raceModel->paginate(18);
         $data['pager'] = $raceModel->pager;
+        $userId = $this->session->get('idUser');
+        $data['user'] = $userId;
         return view('main_page', $data);
     }
     public function filter()
 {
     $raceModel = new RaceModel();
     $filter = $this->request->getGet('filter');
+    $sort = $this->request->getGet('sort');
 
+    // Filtrování
     if ($filter) {
-        $data['races'] = $raceModel->like('default_name', $filter)->findAll();
-    } else {
-        $data['races'] = $raceModel->paginate(18);
+        $raceModel->like('default_name', $filter);
     }
 
-    return view('race_cards', $data);
+    // Řazení
+    if ($sort) {
+        $sortOptions = explode(',', $sort); // Rozdělení na jednotlivé možnosti řazení
+        foreach ($sortOptions as $option) {
+            switch ($option) {
+                case 'default_name_asc':
+                    $raceModel->orderBy('default_name', 'ASC');
+                    break;
+                case 'default_name_desc':
+                    $raceModel->orderBy('default_name', 'DESC');
+                    break;
+                case 'date_asc':
+                    $raceModel->orderBy('date', 'ASC');
+                    break;
+                case 'date_desc':
+                    $raceModel->orderBy('date', 'DESC');
+                    break;
+            }
+        }
+    }
 
+    $data['races'] = $raceModel->paginate(18);
+    $data['pager'] = $raceModel->pager; // Přidejte pager do dat
+    return view('race_cards', $data);
 }
 
     // Metoda zobrazující stránku závodu
@@ -55,10 +79,31 @@ class Home extends BaseController
     }
 
     // Metoda zobrazující profil přihlášeného uživatele
-    public function profile()
+    public function profile($idUser)
     {
-        // Chybí: data přihlášeného uživatele (jméno, e-mail)
-        return view('profile');
+        $user = $this->session->get('idUser');
+        if($user == $idUser){
+            $userModel = new UserModel();
+            $data['user'] = $userModel->find($idUser);
+            $data['interests'] = isset($data['user']->interests) ? json_decode($data['user']->interests, true) : [];
+            return view('profile', $data);   
+        }else{
+            return redirect()->to('/')->with('error', 'Nemáte oprávnění');
+        }
+    }
+    public function saveDescription($idUser){
+        $description = $this->request->getPost('description');
+        $interests = $this->request->getPost('interests'); // Get selected interests
+        $interestsJson = json_encode($interests); // Convert to JSON string
+
+        $userModel = new UserModel();
+        $userModel->save([
+            'id' => $idUser, 
+            'description' => $description,
+            'interests' => $interestsJson // Save interests as JSON
+        ]);
+
+        return redirect()->to('profile/'.$idUser);
     }
 
     // Registrace nového uživatele
@@ -105,8 +150,9 @@ class Home extends BaseController
             return redirect()->to('login');
         }
 
+        $this->session->set('idUser', $user->id);
         $this->session->set('username', $username);
-        $this->session->set('password', password_hash($password, PASSWORD_DEFAULT));
+        //$this->session->set('password', password_hash($password, PASSWORD_DEFAULT)); //Heslo by se nemělo ukládat do session, protože je to riziko.
         return redirect()->to('/');
     }
 

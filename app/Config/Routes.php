@@ -8,7 +8,8 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index', ['filter' => 'login']); // Hlavní stránka (karty závodů)
 $routes->get('filter', 'Home::filter');
 $routes->get('race/(:num)', 'Home::race/$1', ['filter' => 'login']); // Stránka závodu (tabulka ročníků)
-$routes->get('profile', 'Home::profile', ['filter' => 'login']); // Profil přihlášeného uživatele
+$routes->get('profile/(:num)', 'Home::profile/$1', ['filter' => 'login']); // Profil přihlášeného uživatele
+$routes->post('saveDescription/(:num)', 'Home::saveDescription/$1', ['filter' => 'login']); // Uložení popisu k profilu.
 $routes->post('register', 'Home::register'); // Registrace nového uživatele
 $routes->get('register', 'Home::registerForm'); // Registrační formulář
 $routes->post('login', 'Home::login'); // Přihlášení uživatele
