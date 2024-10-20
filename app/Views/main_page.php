@@ -31,7 +31,7 @@
         }
         .navbar {
             background-color: #007bff;
-            margin-bottom: 20px;
+            margin-bottom: 0; /* Remove margin to place the search bar directly under */
         }
         .navbar-brand i {
             color: white;
@@ -40,69 +40,87 @@
             padding-left: 5px;
             padding-right: 5px;
         }
+        .search-bar {
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="">
-                <i class="fas fa-bicycle"></i>
-            </a>
+<nav class="navbar navbar-light">
+    <div class="container-fluid d-flex justify-content-between">
+        <a class="navbar-brand" href="">
+            <i class="fas fa-bicycle"></i>
+        </a>
+        <div class="d-flex">
             <a class="navbar-brand" href="<?= base_url('profile/'. $user); ?>">
                 <i class="fas fa-user"></i>
             </a>
+            <a class="navbar-brand" href="<?= base_url('dashboard'); ?>">
+                <i class="fas fa-chart-line"></i>
+            </a>
+            <a class="navbar-brand" href="<?= base_url('dashboard'); ?>">
+                <i class="fas fa-home"></i>
+            </a>
         </div>
-    </nav>
-    <div class="container my-4">
-        <div class="d-flex justify-content-between">
-            <input type="text" id="raceFilter" name="" placeholder="Hledejte podle názvu..." class="form-control mb-3" style="width: 300px;" />
-            <a href="<?= base_url('export'); ?>">Excel - export</a>
-        </div>
-        <div class="row d-flex justify-content-center" id="raceCards">
-            <?php foreach($races as $race) { ?>
-                <div class="card m-1 race-card" style="height: 130px">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <?php echo $race->default_name; ?>
-                        </h5>
-                        <p class="card-text">
-                            <a href="<?php echo base_url('race/'.$race->id)?>" class="text-decoration-none">
-                                Více informací o závodu
-                            </a>
-                            <br>
-                            <a href="<?php echo base_url('generate-pdf/'.$race->id)?>" class="text-decoration-none" target="_blank">
-                                Zobrazit v PDF
-                            </a>
-                        </p>
-                    </div>
+    </div>
+</nav>
+
+<div class="search-bar">
+    <div class="container d-flex justify-content-between">
+        <input type="text" id="raceFilter" name="" placeholder="Hledejte podle názvu..." class="form-control" style="width: 300px;" />
+        <a href="<?= base_url('export'); ?>" class="btn btn-success">Excel - export</a>
+    </div>
+</div>
+
+<div class="container my-4">
+    <div class="row d-flex justify-content-center" id="raceCards">
+        <?php foreach($races as $race) { ?>
+            <div class="card m-1 race-card" style="height: 130px">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <?php echo $race->default_name; ?>
+                    </h5>
+                    <p class="card-text">
+                        <a href="<?php echo base_url('race/'.$race->id)?>" class="text-decoration-none">
+                            Více informací o závodu
+                        </a>
+                        <br>
+                        <a href="<?php echo base_url('generate-pdf/'.$race->id)?>" class="text-decoration-none" target="_blank">
+                            Zobrazit v PDF
+                        </a>
+                    </p>
                 </div>
-            <?php } ?>
-        </div>
+            </div>
+        <?php } ?>
+    </div>
     <ul class="pagination">
         <?php if (isset($pager) && $pager): ?>
             <?php echo $pager->links();?>
         <?php endif; ?>
     </ul>
-    </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const filterInput = document.getElementById('raceFilter');
-        const raceCardsContainer = document.getElementById('raceCards');
-        const pagination = document.querySelector('.pagination'); // Získání paginace
+</div>
 
-        filterInput.addEventListener('input', function() {
-            const filterValue = filterInput.value;
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterInput = document.getElementById('raceFilter');
+    const raceCardsContainer = document.getElementById('raceCards');
+    const pagination = document.querySelector('.pagination'); // Získání paginace
 
-            // Odeslání AJAX požadavku
-            fetch(`<?php echo base_url('filter'); ?>?filter=${filterValue}`)
-                .then(response => response.text())
-                .then(data => {
-                    raceCardsContainer.innerHTML = data; // Aktualizuj pouze karty závodů
-                    pagination.style.display = filterValue ? 'none' : ''; // Skrytí paginace při aktivním filtru
-                })
-                .catch(error => console.error('Error:', error));
-        });
+    filterInput.addEventListener('input', function() {
+        const filterValue = filterInput.value;
+
+        // Odeslání AJAX požadavku
+        fetch(`<?php echo base_url('filter'); ?>?filter=${filterValue}`)
+            .then(response => response.text())
+            .then(data => {
+                raceCardsContainer.innerHTML = data; // Aktualizuj pouze karty závodů
+                pagination.style.display = filterValue ? 'none' : ''; // Skrytí paginace při aktivním filtru
+            })
+            .catch(error => console.error('Error:', error));
     });
-    </script>
+});
+</script>
 </body>
 </html>
