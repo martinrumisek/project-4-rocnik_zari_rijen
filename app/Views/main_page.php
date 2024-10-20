@@ -9,15 +9,6 @@
     <script src="<?= base_url('vendor/tinymce/tinymce/tinymce.min.js'); ?>"></script>
     <title>All races (závody)</title>
     <style>
-        .card {
-            width: 22rem;
-            height: 22rem;
-            margin: auto;
-        }
-        .card-body {
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
         .pagination {
             justify-content: center;
             margin-top: 20px;
@@ -45,23 +36,34 @@
             padding: 10px 20px;
             border-bottom: 1px solid #ddd;
         }
+        .btn-details:hover{
+            width: 85%!important;
+            transition: 0.3s;
+            transition-timing-function: ease;
+        }
+        .btn-details{
+            width: 75%!important;
+            transition: 0.3s;
+            transition-timing-function: ease;
+        }
     </style>
 </head>
 <body>
-<nav class="navbar navbar-light">
-    <div class="container-fluid d-flex justify-content-between">
-        <a class="navbar-brand" href="">
+<nav class="navbar bg-primary">
+    <div class="container-fluid d-flex justify-content-between ">
+        <a class="navbar-brand text-white" href="">
             <i class="fas fa-bicycle"></i>
         </a>
         <div class="d-flex">
-            <a class="navbar-brand" href="<?= base_url('profile/'. $user); ?>">
+            <a class="navbar-brand text-white" href="<?= base_url('graphs'); ?>">
+                <i class="fas fa-chart-pie"></i>
+            </a>
+            <a class="navbar-brand text-white" href="<?= base_url('dashboard'); ?>">
+                <i class="fas fa-square-poll-horizontal"></i>
+            </a>
+            
+            <a class="navbar-brand text-white" href="<?= base_url('profile'); ?>">
                 <i class="fas fa-user"></i>
-            </a>
-            <a class="navbar-brand" href="<?= base_url('dashboard'); ?>">
-                <i class="fas fa-chart-line"></i>
-            </a>
-            <a class="navbar-brand" href="<?= base_url('dashboard'); ?>">
-                <i class="fas fa-home"></i>
             </a>
         </div>
     </div>
@@ -74,25 +76,30 @@
     </div>
 </div>
 
-<div class="container my-4">
+<div class="container py-4">
     <div class="row d-flex justify-content-center" id="raceCards">
         <?php foreach($races as $race) { ?>
-            <div class="card m-1 race-card" style="height: 130px">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <?php echo $race->default_name; ?>
-                    </h5>
-                    <p class="card-text">
-                        <a href="<?php echo base_url('race/'.$race->id)?>" class="text-decoration-none">
-                            Více informací o závodu
+            <div class="card m-1 race-card" style="width: 18rem; min-height: 12rem">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div class="d-flex justify-content-center align-items-center h-100">
+                        <span class="card-title text-center fs-5 fw-normal m-0" style="display: inline-block; vertical-align: middle;">
+                            <?php echo $race->default_name; ?>
+                        </span>
+                    </div>
+                    
+                    <div class="mt-auto w-100 d-flex flex-column justify-content-center">
+                        <!--
+                            <a href="<?php echo base_url('generate-pdf/'.$race->id)?>" class="d-flex justify-content-center text-decoration-none w-100 p-1 button-right" target="_blank">
+                                Show PDF <i class="fa fa-external-link fa-xs px-1 py-2"></i>
+                            </a>
+                        -->
+                        <a href="<?php echo base_url('race/'.$race->id)?>" class="d-flex justify-content-center text-decoration-none w-100 p-1 button-left">
+                            <button class="btn w-75 btn-primary btn-details">Details</button>
                         </a>
-                        <br>
-                        <a href="<?php echo base_url('generate-pdf/'.$race->id)?>" class="text-decoration-none" target="_blank">
-                            Zobrazit v PDF
-                        </a>
-                    </p>
+                    </div>
                 </div>
             </div>
+
         <?php } ?>
     </div>
     <ul class="pagination">
