@@ -58,9 +58,10 @@
         <table class="table table-striped" id="raceTable">
             <thead>
                 <tr>
-                    <th>Vlajka</th>
-                    <th>Zkratka země</th>
-                    <th>Rok</th>
+                    <th>Flag</th>
+                    <th>Country code</th>
+                    <th>Name</th>
+                    <th>Year</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,6 +70,7 @@
                     <tr>
                         <td><span class="fi fi-<?php echo strtolower($race_year->country); ?>"></span></td>
                         <td><?php echo $race_year->country; ?></td>
+                        <td><?php echo $race_year->real_name; ?></td>
                         <td><?php echo $race_year->year; ?></td>
                     </tr>
                 <?php } ?>
