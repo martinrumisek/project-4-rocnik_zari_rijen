@@ -28,24 +28,24 @@
     </style>
 </head>
 <body>
-<nav class="navbar bg-primary">
-    <div class="container-fluid d-flex justify-content-between ">
-        <a class="navbar-brand text-white" href="">
-            <i class="fas fa-bicycle"></i>
-        </a>
-        <div class="d-flex">
-            <a class="navbar-brand text-white" href="<?= base_url('graphs'); ?>">
-                <i class="fas fa-chart-pie"></i>
+    <nav class="navbar bg-primary">
+        <div class="container-fluid d-flex justify-content-between ">
+            <a class="navbar-brand text-white" href="<?= base_url();?>">
+                <i class="fas fa-bicycle"></i>
             </a>
-            <a class="navbar-brand text-white" href="<?= base_url('dashboard'); ?>">
-                <i class="fas fa-square-poll-horizontal"></i>
-            </a>
-            <a class="navbar-brand text-white" href="<?= base_url('profile'); ?>">
-                <i class="fas fa-user"></i>
-            </a>
+            <div class="d-flex">
+                <a class="navbar-brand text-white" href="<?= base_url('graphs'); ?>">
+                    <i class="fas fa-chart-pie"></i>
+                </a>
+                <a class="navbar-brand text-white" href="<?= base_url('dashboard'); ?>">
+                    <i class="fas fa-square-poll-horizontal"></i>
+                </a>
+                <a class="navbar-brand text-white" href="<?= base_url('profile'); ?>">
+                    <i class="fas fa-user"></i>
+                </a>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     <div class="container race-info">
         <!-- Název závodu -->

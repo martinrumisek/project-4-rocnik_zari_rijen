@@ -49,85 +49,84 @@
     </style>
 </head>
 <body>
-<nav class="navbar bg-primary">
-    <div class="container-fluid d-flex justify-content-between ">
-        <a class="navbar-brand text-white" href="">
-            <i class="fas fa-bicycle"></i>
-        </a>
-        <div class="d-flex">
-            <a class="navbar-brand text-white" href="<?= base_url('graphs'); ?>">
-                <i class="fas fa-chart-pie"></i>
+    <nav class="navbar bg-primary">
+        <div class="container-fluid d-flex justify-content-between ">
+            <a class="navbar-brand text-white" href="<?= base_url();?>">
+                <i class="fas fa-bicycle"></i>
             </a>
-            <a class="navbar-brand text-white" href="<?= base_url('dashboard'); ?>">
-                <i class="fas fa-square-poll-horizontal"></i>
-            </a>
-            
-            <a class="navbar-brand text-white" href="<?= base_url('profile'); ?>">
-                <i class="fas fa-user"></i>
-            </a>
+            <div class="d-flex">
+                <a class="navbar-brand text-white" href="<?= base_url('graphs'); ?>">
+                    <i class="fas fa-chart-pie"></i>
+                </a>
+                <a class="navbar-brand text-white" href="<?= base_url('dashboard'); ?>">
+                    <i class="fas fa-square-poll-horizontal"></i>
+                </a>
+                <a class="navbar-brand text-white" href="<?= base_url('profile'); ?>">
+                    <i class="fas fa-user"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="search-bar">
+        <div class="container d-flex justify-content-between">
+            <input type="text" id="raceFilter" name="" placeholder="Hledejte podle názvu..." class="form-control" style="width: 300px;" />
+            <a href="<?= base_url('export'); ?>" class="btn btn-success">Excel - export</a>
         </div>
     </div>
-</nav>
 
-<div class="search-bar">
-    <div class="container d-flex justify-content-between">
-        <input type="text" id="raceFilter" name="" placeholder="Hledejte podle názvu..." class="form-control" style="width: 300px;" />
-        <a href="<?= base_url('export'); ?>" class="btn btn-success">Excel - export</a>
-    </div>
-</div>
-
-<div class="container py-4">
-    <div class="row d-flex justify-content-center" id="raceCards">
-        <?php foreach($races as $race) { ?>
-            <div class="card m-1 race-card" style="width: 18rem; min-height: 12rem">
-                <div class="card-body d-flex flex-column justify-content-between">
-                    <div class="d-flex justify-content-center align-items-center h-100">
-                        <span class="card-title text-center fs-5 fw-normal m-0" style="display: inline-block; vertical-align: middle;">
-                            <?php echo $race->default_name; ?>
-                        </span>
-                    </div>
-                    
-                    <div class="mt-auto w-100 d-flex flex-column justify-content-center">
-                        <!--
-                            <a href="<?php echo base_url('generate-pdf/'.$race->id)?>" class="d-flex justify-content-center text-decoration-none w-100 p-1 button-right" target="_blank">
-                                Show PDF <i class="fa fa-external-link fa-xs px-1 py-2"></i>
+    <div class="container py-4">
+        <div class="row d-flex justify-content-center" id="raceCards">
+            <?php foreach($races as $race) { ?>
+                <div class="card m-1 race-card" style="width: 18rem; min-height: 12rem">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div class="d-flex justify-content-center align-items-center h-100">
+                            <span class="card-title text-center fs-5 fw-normal m-0" style="display: inline-block; vertical-align: middle;">
+                                <?php echo $race->default_name; ?>
+                            </span>
+                        </div>
+                        
+                        <div class="mt-auto w-100 d-flex flex-column justify-content-center">
+                            <!--
+                                <a href="<?php echo base_url('generate-pdf/'.$race->id)?>" class="d-flex justify-content-center text-decoration-none w-100 p-1 button-right" target="_blank">
+                                    Show PDF <i class="fa fa-external-link fa-xs px-1 py-2"></i>
+                                </a>
+                            -->
+                            <a href="<?php echo base_url('race/'.$race->id)?>" class="d-flex justify-content-center text-decoration-none w-100 p-1 button-left">
+                                <button class="btn w-75 btn-primary btn-details">Details</button>
                             </a>
-                        -->
-                        <a href="<?php echo base_url('race/'.$race->id)?>" class="d-flex justify-content-center text-decoration-none w-100 p-1 button-left">
-                            <button class="btn w-75 btn-primary btn-details">Details</button>
-                        </a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        <?php } ?>
+            <?php } ?>
+        </div>
+        <ul class="pagination">
+            <?php if (isset($pager) && $pager): ?>
+                <?php echo $pager->links();?>
+            <?php endif; ?>
+        </ul>
     </div>
-    <ul class="pagination">
-        <?php if (isset($pager) && $pager): ?>
-            <?php echo $pager->links();?>
-        <?php endif; ?>
-    </ul>
-</div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const filterInput = document.getElementById('raceFilter');
-    const raceCardsContainer = document.getElementById('raceCards');
-    const pagination = document.querySelector('.pagination'); // Získání paginace
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterInput = document.getElementById('raceFilter');
+        const raceCardsContainer = document.getElementById('raceCards');
+        const pagination = document.querySelector('.pagination'); // Získání paginace
 
-    filterInput.addEventListener('input', function() {
-        const filterValue = filterInput.value;
+        filterInput.addEventListener('input', function() {
+            const filterValue = filterInput.value;
 
-        // Odeslání AJAX požadavku
-        fetch(`<?php echo base_url('filter'); ?>?filter=${filterValue}`)
-            .then(response => response.text())
-            .then(data => {
-                raceCardsContainer.innerHTML = data; // Aktualizuj pouze karty závodů
-                pagination.style.display = filterValue ? 'none' : ''; // Skrytí paginace při aktivním filtru
-            })
-            .catch(error => console.error('Error:', error));
+            // Odeslání AJAX požadavku
+            fetch(`<?php echo base_url('filter'); ?>?filter=${filterValue}`)
+                .then(response => response.text())
+                .then(data => {
+                    raceCardsContainer.innerHTML = data; // Aktualizuj pouze karty závodů
+                    pagination.style.display = filterValue ? 'none' : ''; // Skrytí paginace při aktivním filtru
+                })
+                .catch(error => console.error('Error:', error));
+        });
     });
-});
-</script>
+    </script>
 </body>
 </html>
