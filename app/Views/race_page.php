@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.7.0/css/flag-icons.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <title>Race (závod) - <?php echo $race->default_name;?></title>
     <style>
         .race-info {
@@ -26,10 +28,33 @@
     </style>
 </head>
 <body>
+<nav class="navbar bg-primary">
+    <div class="container-fluid d-flex justify-content-between ">
+        <a class="navbar-brand text-white" href="">
+            <i class="fas fa-bicycle"></i>
+        </a>
+        <div class="d-flex">
+            <a class="navbar-brand text-white" href="<?= base_url('graphs'); ?>">
+                <i class="fas fa-chart-pie"></i>
+            </a>
+            <a class="navbar-brand text-white" href="<?= base_url('dashboard'); ?>">
+                <i class="fas fa-square-poll-horizontal"></i>
+            </a>
+            <a class="navbar-brand text-white" href="<?= base_url('profile'); ?>">
+                <i class="fas fa-user"></i>
+            </a>
+        </div>
+    </div>
+</nav>
+
     <div class="container race-info">
         <!-- Název závodu -->
-        <h1><?php echo $race->default_name; ?></h1>
-
+        <div class="d-flex flex-row align-items-center">
+            <h1 class="m-0"><?php echo $race->default_name; ?></h1>
+            <a href="<?php echo base_url('generate-pdf/'.$race->id)?>" class="text-decoration-none mx-3" target="_blank">
+                <button class="btn btn-success">Show PDF <i class="fa fa-external-link fa-xs"></i></button>
+            </a>
+        </div>
         <table class="table table-striped" id="raceTable">
             <thead>
                 <tr>

@@ -19,17 +19,26 @@
     </style>
 </head>
 <body>
-    <!-- Ještě se sem neposílá uživatelské jméno atd. první musím udělat filtr a s tím související věci -->
-    <nav class="navbar navbar-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+    <nav class="navbar bg-primary">
+        <div class="container-fluid d-flex justify-content-between ">
+            <a class="navbar-brand text-white" href="">
                 <i class="fas fa-bicycle"></i>
             </a>
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-user"></i>
-            </a>
+            <div class="d-flex">
+                <a class="navbar-brand text-white" href="<?= base_url('graphs'); ?>">
+                    <i class="fas fa-chart-pie"></i>
+                </a>
+                <a class="navbar-brand text-white" href="<?= base_url('dashboard'); ?>">
+                    <i class="fas fa-square-poll-horizontal"></i>
+                </a>
+                
+                <a class="navbar-brand text-white" href="<?= base_url('profile'); ?>">
+                    <i class="fas fa-user"></i>
+                </a>
+            </div>
         </div>
     </nav>
+    
     <div class="d-flex flex-wrap mt-4 container">
         <div class="col-12 col-md-2 d-flex justify-content-center mb-3 mb-md-0">
             <i class="fa-solid fa-user h1 bg-white shadow p-4 rounded-pill"></i>
