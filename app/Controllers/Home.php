@@ -207,11 +207,11 @@ class Home extends BaseController
             <table border="1" cellspacing="0" cellpadding="5" width="100%">
                 <thead>
                     <tr>
-                        <th>Zkratka země</th>
-                        <th>Skutečný název</th>
-                        <th>Rok</th>
-                        <th>Zahajení</th>
-                        <th>Ukončení</th>
+                        <th>Country code</th>
+                        <th>Name</th>
+                        <th>Year</th>
+                        <th>Start date</th>
+                        <th>End date</th>
                     </tr>
                 </thead>
                 <tbody>';
