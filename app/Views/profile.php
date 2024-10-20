@@ -30,15 +30,36 @@
             </a>
         </div>
     </nav>
-
-    <div class="" style="width: 1000px;  display: flex; justify-content: left; margin: 70px auto;">
-        <div class="card border-primary" style="width: 370px; display: flex; justify-content: left;">
-            <div class="card-header"><?= $user->username?></div>
+    <div class="d-flex flex-wrap mt-4 container">
+        <div class="col-12 col-md-2 d-flex justify-content-center mb-3 mb-md-0">
+            <i class="fa-solid fa-user h1 bg-white shadow p-4 rounded-pill"></i>
+        </div>
+        <div class="col-12 col-md-2 d-flex align-items-center justify-content-center mb-3 mb-md-0">
+            <p class="h3 text-center"><?=$user->username?></p>
+        </div>
+        <div class="col-12 offset-md-3 col-md-5">
+            <h3>Zájmy:</h3>
+            <?php if (!empty($interests)): ?>
+                <ul>
+                    <?php foreach ($interests as $interest): ?>
+                        <li><?= htmlspecialchars($interest); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p>Uživatel nemá žádné zájmy.</p>
+            <?php endif; ?>
         </div>
     </div>
-
-    <div style="display: flex; justify-content: center;">
-        <div style="min-width: 1000px;">
+    <div class="container mt-3">
+        <div>
+            <h3 class="m-3">Popis uživatele</h3>
+            <?=$user->description?>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center"><button id="showFormButton" class="btn btn-primary">Upravit text/zájmy</button>
+    </div>
+    <div class="container" id="userForm" style="display: none;">
+        <div style="width: 100%;">
             <label for="exampleTextarea" class="form-label mt-4">Info o uživateli</label>
             <form method="POST" action="<?= base_url('saveDescription/'. $user->id); ?>">
                 <textarea id="myTextarea" name="description"><?=$user->description?></textarea>
@@ -50,23 +71,23 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="interests[]" value="mountain_biking" id="interest1" <?= in_array('mountain_biking', $interests) ? 'checked' : ''; ?>>
+                                <input class="form-check-input" type="checkbox" name="interests[]" value="Horská cyklistika" id="interest1" <?= in_array('Horská cyklistika', $interests) ? 'checked' : ''; ?>>
                                 <label class="form-check-label" for="interest1">Horská cyklistika</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="interests[]" value="road_cycling" id="interest2" <?= in_array('road_cycling', $interests) ? 'checked' : ''; ?>>
+                                <input class="form-check-input" type="checkbox" name="interests[]" value="Silniční cyklistika" id="interest2" <?= in_array('Silniční cyklistika', $interests) ? 'checked' : ''; ?>>
                                 <label class="form-check-label" for="interest2">Silniční cyklistika</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="interests[]" value="bmx" id="interest3" <?= in_array('bmx', $interests) ? 'checked' : ''; ?>>
+                                <input class="form-check-input" type="checkbox" name="interests[]" value="BMX" id="interest3" <?= in_array('BMX', $interests) ? 'checked' : ''; ?>>
                                 <label class="form-check-label" for="interest3">BMX</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="interests[]" value="track_cycling" id="interest4" <?= in_array('track_cycling', $interests) ? 'checked' : ''; ?>>
+                                <input class="form-check-input" type="checkbox" name="interests[]" value="Dráhová cyklistika" id="interest4" <?= in_array('Dráhová cyklistika', $interests) ? 'checked' : ''; ?>>
                                 <label class="form-check-label" for="interest4">Dráhová cyklistika</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="interests[]" value="commuting" id="interest5" <?= in_array('commuting', $interests) ? 'checked' : ''; ?>>
+                                <input class="form-check-input" type="checkbox" name="interests[]" value="Dojíždění na kole" id="interest5" <?= in_array('Dojíždění na kole', $interests) ? 'checked' : ''; ?>>
                                 <label class="form-check-label" for="interest5">Dojíždění na kole</label>
                             </div>
                         </div>
@@ -79,6 +100,12 @@
     <script>
     tinymce.init({
         selector: '#myTextarea'
+    });
+    document.getElementById('showFormButton').addEventListener('click', function() {
+        var formContainer = document.getElementById('userForm');
+        var showButton = document.getElementById('showFormButton');
+        formContainer.style.display = 'block';
+        showButton.style.display = 'none';
     });
 </script>
 </body>
