@@ -70,7 +70,7 @@
 
     <div class="search-bar">
         <div class="container d-flex justify-content-between">
-            <input type="text" id="raceFilter" name="" placeholder="Hledejte podle názvu..." class="form-control" style="width: 300px;" />
+            <input type="text" id="raceFilter" name="" placeholder="Search by name" class="form-control" style="width: 300px;" />
             <a href="<?= base_url('export'); ?>" class="btn btn-success">Excel - export</a>
         </div>
     </div>
