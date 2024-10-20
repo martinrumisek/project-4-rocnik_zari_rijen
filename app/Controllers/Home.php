@@ -24,7 +24,7 @@ class Home extends BaseController
     public function index()
     {
         $raceModel = new RaceModel();
-        $data['races'] = $raceModel->paginate(15);
+        $data['races'] = $raceModel->paginate(12);
         $data['pager'] = $raceModel->pager;
         $userId = $this->session->get('idUser');
         $data['user'] = $userId;
@@ -79,12 +79,12 @@ class Home extends BaseController
     }
 
     // Metoda zobrazující profil přihlášeného uživatele
-    public function profile($idUser)
+    public function profile()
     {
-        $user = $this->session->get('idUser');
-        if($user == $idUser){
-            $userModel = new UserModel();
-            $data['user'] = $userModel->find($idUser);
+        $userModel = new UserModel();
+        $user = $userModel->where('username', $this->session->get('username'))->first();
+        if(isset($user)){
+            $data['user'] = $user;
             $data['interests'] = isset($data['user']->interests) ? json_decode($data['user']->interests, true) : [];
             return view('profile', $data);   
         }else{
