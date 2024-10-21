@@ -13,6 +13,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class Home extends BaseController
 {
     private $session;
+    var $perPage = 12;
 
     // Konstruktor controlleru
     public function __construct()
@@ -24,7 +25,7 @@ class Home extends BaseController
     public function index()
     {
         $raceModel = new RaceModel();
-        $data['races'] = $raceModel->paginate(12);
+        $data['races'] = $raceModel->paginate($this->perPage);
         $data['pager'] = $raceModel->pager;
         $userId = $this->session->get('idUser');
         $data['user'] = $userId;
@@ -62,7 +63,7 @@ class Home extends BaseController
         }
     }
 
-    $data['races'] = $raceModel->paginate(18);
+    $data['races'] = $raceModel->paginate($this->perPage);
     $data['pager'] = $raceModel->pager; // Přidejte pager do dat
     return view('race_cards', $data);
 }
