@@ -171,6 +171,10 @@ textarea.form-control {
  }
   .btn:hover, .btn:active, .btn:focus {
     outline: none; }
+    .btn:focus{
+    background-color: rgba(0, 0, 0, .55);
+    color: white !important;
+ }
         body{
             height: 100vh;
             width: auto;
