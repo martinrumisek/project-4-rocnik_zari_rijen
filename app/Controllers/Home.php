@@ -92,8 +92,8 @@ class Home extends BaseController
         }
     }
     public function saveDescription($idUser){
-        $description = $this->request->getPost('description');
-        $interests = $this->request->getPost('interests'); // Get selected interests
+        $description = $this->request->getPost('description') ?? "";
+        $interests = $this->request->getPost('interests') ?? []; // Get selected interests
         $interestsJson = json_encode($interests); // Convert to JSON string
 
         $userModel = new UserModel();
