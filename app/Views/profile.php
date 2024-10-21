@@ -60,8 +60,8 @@
     </div>
     <div class="container mt-3">
         <div>
-            <h3 class="m-3">User description</h3>
-            <?=$user->description?>
+            <h3>User description</h3>
+            <p><?=$user->description?></p>
         </div>
     </div>
     <div class="d-flex justify-content-center"><button id="showFormButton" class="btn btn-primary">Edit description and hobbies</button>
