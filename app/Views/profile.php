@@ -77,7 +77,7 @@
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                             Vyberte zájmy
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div class="dropdown-menu p-1" aria-labelledby="dropdownMenuButton">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="interests[]" value="Mountain cycling" id="interest1" <?= in_array('Mountain cycling', $interests) ? 'checked' : ''; ?>>
                                 <label class="form-check-label" for="interest1">Mountain cycling</label>
