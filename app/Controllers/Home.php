@@ -104,7 +104,7 @@ class Home extends BaseController
             'interests' => $interestsJson // Save interests as JSON
         ]);
 
-        return redirect()->to('profile/'.$idUser);
+        return redirect()->to('profile');
     }
 
     // Registrace nového uživatele
