@@ -46,7 +46,7 @@
             <p class="h3 text-center"><?=$user->username?></p>
         </div>
         <div class="col-12 offset-md-3 col-md-5">
-            <h3>Zájmy:</h3>
+            <h3>Hobbies:</h3>
             <?php if (!empty($interests)): ?>
                 <ul>
                     <?php foreach ($interests as $interest): ?>
@@ -54,54 +54,54 @@
                     <?php endforeach; ?>
                 </ul>
             <?php else: ?>
-                <p>Uživatel nemá žádné zájmy.</p>
+                <p>User doesn't have any hobbies.</p>
             <?php endif; ?>
         </div>
     </div>
     <div class="container mt-3">
         <div>
-            <h3 class="m-3">Popis uživatele</h3>
+            <h3 class="m-3">User description</h3>
             <?=$user->description?>
         </div>
     </div>
-    <div class="d-flex justify-content-center"><button id="showFormButton" class="btn btn-primary">Upravit text/zájmy</button>
+    <div class="d-flex justify-content-center"><button id="showFormButton" class="btn btn-primary">Edit description and hobbies</button>
     </div>
     <div class="container" id="userForm" style="display: none;">
         <div style="width: 100%;">
-            <label for="exampleTextarea" class="form-label mt-4">Info o uživateli</label>
+            <label for="exampleTextarea" class="form-label mt-4">User info</label>
             <form method="POST" action="<?= base_url('saveDescription/'. $user->id); ?>">
                 <textarea id="myTextarea" name="description"><?=$user->description?></textarea>
                 <div class="mb-3">
-                    <label for="interests" class="form-label">Zájmy v cyklistice:</label>
+                    <label for="interests" class="form-label">Hobbies:</label>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                             Vyberte zájmy
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="interests[]" value="Horská cyklistika" id="interest1" <?= in_array('Horská cyklistika', $interests) ? 'checked' : ''; ?>>
-                                <label class="form-check-label" for="interest1">Horská cyklistika</label>
+                                <input class="form-check-input" type="checkbox" name="interests[]" value="Mountain cycling" id="interest1" <?= in_array('Mountain cycling', $interests) ? 'checked' : ''; ?>>
+                                <label class="form-check-label" for="interest1">Mountain cycling</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="interests[]" value="Silniční cyklistika" id="interest2" <?= in_array('Silniční cyklistika', $interests) ? 'checked' : ''; ?>>
-                                <label class="form-check-label" for="interest2">Silniční cyklistika</label>
+                                <input class="form-check-input" type="checkbox" name="interests[]" value="Road cycling" id="interest2" <?= in_array('Road cycling', $interests) ? 'checked' : ''; ?>>
+                                <label class="form-check-label" for="interest2">Road cycling</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="interests[]" value="BMX" id="interest3" <?= in_array('BMX', $interests) ? 'checked' : ''; ?>>
                                 <label class="form-check-label" for="interest3">BMX</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="interests[]" value="Dráhová cyklistika" id="interest4" <?= in_array('Dráhová cyklistika', $interests) ? 'checked' : ''; ?>>
-                                <label class="form-check-label" for="interest4">Dráhová cyklistika</label>
+                                <input class="form-check-input" type="checkbox" name="interests[]" value="Track cycling" id="interest4" <?= in_array('Track cycling', $interests) ? 'checked' : ''; ?>>
+                                <label class="form-check-label" for="interest4">Track cycling</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="interests[]" value="Dojíždění na kole" id="interest5" <?= in_array('Dojíždění na kole', $interests) ? 'checked' : ''; ?>>
-                                <label class="form-check-label" for="interest5">Dojíždění na kole</label>
+                                <input class="form-check-input" type="checkbox" name="interests[]" value="Commuting by bike" id="interest5" <?= in_array('Commuting by bike', $interests) ? 'checked' : ''; ?>>
+                                <label class="form-check-label" for="interest5">Commuting by bike</label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit">Uložit</button>
+                <button class="btn btn-primary" type="submit">Save</button>
             </form>
         </div>
     </div>
