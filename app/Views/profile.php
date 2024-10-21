@@ -39,8 +39,8 @@
     </nav>
     
     <div class="d-flex flex-wrap mt-4 container">
-        <div class="col-12 col-md-2 d-flex justify-content-center mb-3 mb-md-0">
-            <i class="fa-solid fa-user h1 bg-white shadow p-4 rounded-pill"></i>
+        <div class="col-12 col-md-2 d-flex justify-content-center align-items-center mb-3 mb-md-0">
+            <i class="fa-solid fa-user h1 "></i>
         </div>
         <div class="col-12 col-md-2 d-flex align-items-center justify-content-center mb-3 mb-md-0">
             <p class="h3 text-center"><?=$user->username?></p>
